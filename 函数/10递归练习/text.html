@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type = "text/javascript">
+			function climb(n){
+				if(n == 1){
+					return 1;
+				}if(n == 2){
+					return 2;
+				}
+				return climb(n-1)+climb(n-2);
+			}
+			alert(climb(10));
+			
+			
+			/* function climb(n){
+				var a = [0,1,2];
+				for(var i =3;i<=n;i++){
+					a[i] = a[i-1] + a[i-2];
+				}
+				return a[n];
+			}
+			alert(climb(5)); */
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type = "text/javascript">
+			
+			/* var i = 0;
+			var show = function(){
+				document.write(i++ + "<br />");
+			}
+				
+			
+			window.onload=function(){
+				var oBtn = document.getElementById("btn");
+				oBtn.onclick=function(){
+					var timer = setInterval(function(){document.write(i++ + "<br />");
+						if(i == 5){
+						clearInterval(timer);
+					 }
+					},1000)
+				}
+			} */
+			
+			window.onload= function(){
+				oBtn = document.getElementById("btn");
+				oDiv = document.getElementById("div1");
+				
+				oBtn.onclick = function(){
+					oDiv.innerHTML = "<h1>我是替换文本</h1>";
+				}
+			}
+			
+			
+			
+			
+		</script>
+	</head>
+	<body>
+		<div id ="div1"> <em>斜体</em></div>
+		<input type = "button" id = "btn" value = "按钮"/>
+	</body>
+</html>

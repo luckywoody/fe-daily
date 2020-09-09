@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type = "text/javascript">
+			debugger
+			function getValue(search,key){
+				var start = search.indexOf(key);
+				if(start == -1){
+					return
+				}else{
+					var end = search.indexOf("&",start);
+					if(end == -1){
+						end = search.length;
+					}
+					
+				}
+				var str = search.substring(start,end);
+				 // alert(str);
+				 var arr = str.split("=");
+				 alert(arr[1]);
+			}
+			var search = "?<id=5&search=ok";
+			getValue(search,"id");
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type = "text/javascript">
+			window.onload = function(){
+				var oBtn = document.getElementById("btn");
+				oBtn.onclick = function(){
+					// open("https://www.baidu.com");
+					//如果只有一个参数，调用open方法会打开新窗口，加载url
+					
+					// open("https://www.baidu.com","百度");
+					//第二个参数，是给打开的新窗口起一个名字，然后以后，再去加载url，就在这个已经起好名字的目标新窗口加载url
+					
+					open("https://www.baidu.com","百度","width = 400,height=400,top=200,left=200");
+					//第三个参数，设置我当前打开窗口的一些参数
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<input type = "button" value = "按钮" id = "btn"/>
+	</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type = "text/javascript">
+			/* var person = new Object();
+			//给该对象添加数据/属性
+			person.name = "xxx";
+			person.age = 18;
+			//给该对象添加函数/方法
+			person.showName = function(){
+				alert(person.name);
+			}
+			// alert(person.name);
+			person.showName();
+			 */
+			
+			var person ={};
+			// person.name = "xxx";
+			person["name"]= "xxx";
+			person.age = 18;
+			/* person.showName = function(){
+				alert(person.name);
+			} */
+			person["showName"] = function(){
+				alert(person["name"]);
+			}
+			person.showName();
+			
+			alert(person.name);
+			delete person.name;
+			alert(person.name);
+			
+			
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type = "text/javascript">
+			 
+			 
+			 var i = 0;
+			 var show = function(){
+			 // function show(){
+				 document.write(i++ + "<br />");
+			 }
+			 window.onload = function(){
+				 var oBtn = document.getElementById("btn");
+				 oBtn.onclick = function(){
+					 // var timer = setInterval(show,1000) //函数传参
+					 var timer =setInterval(function(){document.write(i++ + "<br />");
+					 if(i == 5){
+						 clearInterval(timer);
+					 }
+					},1000)
+					
+					 
+					
+				 }
+			 }
+			 
+		</script>
+	</head>
+	<body>
+		<input type = "button" value = "按钮" id = "btn" /> 
+	</body>
+</html>
