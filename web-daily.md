@@ -2144,9 +2144,44 @@ var oDate = new Date();
 	    - keep-alive
 			- 让home保持原来的位置 avtivated deactivated
 
+
 #### 详情页开发
 
    - 判断一个对象是否为空 `v-if = "Object.keys(goods).length !==1"`
+	 - 联动效果
+	 - `this.$nextTick(()={})`
+	 - 最大值 `Number.MAX_VALUE`
+	 - 
+	 - 思路
+	    1. 点击商品加入详情页
+			2. 解决- 首页保持位置状态
+			3. 详情页的导航栏实现
+			4. 请求详情的数据
+			5. 轮播图的实现
+			6. 商品基本信息的展示
+			7. 店铺信息的展示
+			8. 商品图片的展示
+			9. 参数信息的展示
+			10. 评论数据的展示
+			11. 推荐数据的展示
+			12. `mixin`的使用
+			13. 处理2个bug
+			14. 详情和内容的联动效果
+			   - 点击标题，滚动到对应的主题
+				 - 内容滚动 显示正确的标题
+      15. 顶部工具栏的封装
+			16. 详情页回到顶部
+			17. 点击购物车
+			   - 监听加入购物车按钮的点击；并且获取商品信息
+				 - 将商品添加到Vuex中
+      18. 购物车的展示
+			   - 购物车导航栏的展示
+			   - 购物车商品的展示
+			   - 商品的选中和不选中切换
+				 - 底部工具栏的汇总
+      19. 映射关系
+			   - actions可以返回一个Promise
+				 - `mapActions的映射关系   ...mapAction(['addCart'])`
 
 #### better-scroll
    - `const bscroll = new BScroll(el, { })`
@@ -2218,9 +2253,8 @@ var oDate = new Date();
      ])
  ```
 		
-	 - toast 弹窗消失
-	 - actions可以返回一个Promise
-	 - mapActions的映射关系   ...mapAction(['addCart'])
+
+  
 
    - fastClick 减小点击延迟 300ms延迟
 	 - polyfill 补丁
@@ -2261,3 +2295,159 @@ var oDate = new Date();
 					 -发布订阅者模式
 					 
 		
+#### 购物车
+
+   - 数组函数 find  `let oldProduct = state.cartList.find(item => item.iid === payload.iid)`
+
+   - 使用 mapGetters `import {mapGetters} from 'vuex' 注意: 是在vuex中导入
+ 	 ```
+	 在getters.js文件导出
+	 export default {
+	   cartLength(state) {
+	     return state.cartList.length
+	   },
+	   cartList(state) {
+	     return state.cartList
+	   }
+	 }
+	 
+	 在组建中使用
+	 computed: {
+	     ...mapGetters(['cartLength','cartList']),
+	 
+	   }
+	 ```
+	 
+#### toast  插件封装方式
+
+   1. 创建一个js文件
+   ```
+	 import Toast from './Toast'
+	 
+	 const obj = {}
+	 
+	 obj.install = function (Vue) {
+	   // 1.创建组件构造器
+	   const toastContrustor = Vue.extend(Toast);
+	 
+	   // 2.new的方式，根据组件构造器，可以创建出来一个组件对象
+	   const toast = new toastContrustor()
+	 
+	   // 3.将组件对象手动挂载到某一个元素上
+	     toast.$mount(document.createElement('div'));
+	 
+	   // 4.toast.$el对应的就是div
+	   document.body.appendChild(toast.$el)
+	 
+	   Vue.prototype.$toast = toast;
+	 }
+	 
+	 export default obj
+	 ```
+	 2. 挂载到`main.js` 上 并且使用 `Vue.use(toast)`
+
+
+#### fastclick 解决移动端300ms延迟
+
+   1. 安装   `npm install fastclick --save`
+	 2. 在main.js中导入  `import FastClick from 'fastclick'`
+	 3. 调用  `FastClick.attach(document.body)`
+
+
+#### 图片懒加载 用到时再加载
+
+   1. 安装  `npm install vue-lazyload --save`
+	 2. 导入 `import VueLazyLoad from 'vue-lazyload'`
+	 3. 使用 `Vue.use(VueLazyLoad, {loading:'导入图片', error:''})`
+	 4. 修改img中  `:src -> v-lazy`
+
+
+#### px2vw webpack插件
+
+   1. 安装插件 `npm install postcss-px-to-viewport --save-dev`
+	 2. 修改`postcss.config.js`文件
+
+	 ```
+	 module.exports = {
+		 plugins: {
+			 autoprefixer: {},
+			 "postcss-px-to-viewport": {
+				 viewportWidth: 375, //视窗的宽度，对应的是我们设计稿的宽度(retina 750 高清)
+				 viewportHeight: 667, //视窗的高度，对应的使我们设计稿的高度（也可以不配置）
+				 unitPrecision: 5,  //指定'px' 转换成是床单位置的小数位数(很多时候无法整除)
+				 viewportUnit: 'vw', //指定需要转换成视窗单位，建议用vw
+				 selectorBlackList:['ignore', 'tab-bar', 'tab-bar-item']// 指定不需要转换的类
+				 minPixeValue: 1, //小于或者邓毅'1px' 不转换成视窗单位
+				 mediaQuery: false, //允许在媒体查询中转换'px'
+				 exclude:[/TabBar/]  //不转换
+			 }
+		 }
+	 }
+	 ```
+	 
+#### Vue响应式原理 及其依赖技术的分析
+
+   1. app.message修改数据，vue内部是如何监听message数据的改变
+      - Object.defineProperty -> 监听对象属性的改变
+
+			```
+				const obj = {
+					message:'哈哈哈',
+					name:'zhangsan'
+				}
+				
+				Object.keys(obj).forEach(key => {
+					let value = obj[key]
+					
+					Object.defineProperty(obj, key, {
+						set(newValue) {
+							consolo.log('监听' + key +'改变' )
+							//根据解析html代码， 获取到哪些人有用属性
+							value =  newValue
+						},
+						
+						get() {
+							console.log('获取' + key + '对应的值')
+							//张三李四 调用get
+							return value
+						}
+					})
+				})
+			```
+   2. 当数据发生改变，Vue如何做到要通知哪些数据，界面发生刷新
+	    - 发布订阅者模式
+
+      ```
+			//发布者
+			class Dep {
+				constructor() {
+					this.subs = []
+				}
+				
+				addSub(watcher) {
+					this.subs.push(watcher)
+				}
+				
+				notify() {
+					this.subs.forEach(item => {
+						item.update()
+					})
+				}
+			}
+			//订阅者
+			class Watcher {
+				constructor(name) {
+					this.name = name;
+				}
+				
+				updata() {
+					
+				}
+			}
+			
+			const dep = new Dep()
+			const w1 = new Watcher('zhangsan');
+			dep.addSub(w1)
+			
+			dep.notify()
+			```
