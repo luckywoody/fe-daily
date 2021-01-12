@@ -2451,3 +2451,69 @@ var oDate = new Date();
 			
 			dep.notify()
 			```
+			
+			
+### Git 分布式版本控制
+   - 先卸载 直接反安装,然后清理环境变量
+
+   1. 下载对应版本 慢的话可以淘宝镜像下载
+	    - https://npm.taobao.org/mirrors/git-for-windows/
+
+   2. 下载完Git，菜单下有三个程序
+	    - Git Bash : Unix与Linux风格的命令行，使用最多，推荐最多
+			- Git CMD  : Windows风格的命令行
+			- Git Gui  : 图形假面Git， 不建议初学者使用，先熟悉常用命令
+
+   3. 常见Linux命令
+	    - cd:改变目录
+			- cd .. 回退到上一个目录, 直接 cd进入默认目录
+			- pwd: 显示当前所在目录的路径
+			- ls(||) : 列出当前目录中的所有文件，只不过两个||内容更为详细
+			- touch : 新建一个如 touch index.js 就会在当前目录下新建一个index.js文件
+			- rm : 删除一个文件, rm index.js 就会删除index.js文件
+			- mkdir: 新建一个目录. 就是新建一个文件夹
+			- rm-r : 删除一个文件夹, rm -r src 删除src目录
+			- mv 移动文件, mv index.html src index.html 就是我们要移动号的文件,src是目标文件夹，当然，这样写必须文件夹在同一个目录下
+			- reset 重新初始化终端/清屏
+			- clear 清屏
+			- history 查看命令历史
+			- help 帮助
+			- exit 退出
+			- #表示注释
+
+   4. Git相关配置
+	    - git config -l 查看配置
+			- git config --system --list 查看系统配置
+			- git config --global --list 本地配置
+			- git config --global user.name "sunwukong" #名称
+			- git config --global suer.email  #邮箱
+
+   5. git工作区域 基本理论  git add files -> git  commit -> git push   ; git pull -> git reset -> git checkout  
+	    - WorkSpace: 工作区，平时存放项目代码 
+			- Index/Stage :暂存区，用于临时存放你的改动，实际上就是一个文件，保存即将提交到文件的列表信息
+			- Repository : 仓库区（本地仓库），就是安全存放数据的位置，这里面有你提交到所有版本的数据。其中HEAD指向最近放入仓库的版本
+			- Remote : 远程残酷，托管代码的服务器， 可以简单的认为是你项目组中的一台电脑，用于数据交换
+
+   6. 项目搭建
+	    - git init 本地初始化项目
+			- git clone [url] 克隆远程目录
+
+#### 使用码云
+
+   - 配置 ssh公钥 免登入
+	    - C:\Users\user\.ssh 目录 
+			- ssh-keygen -t rsa
+
+#### git 分支操作
+
+   - git branch 列出所有本地分支
+	 - git branch -r 列出所有远程分支
+	 - git branch [branch-name] 新建一个分支 但依然停留在当前分支
+	 - git checkout -b [branch] 新建一个分支 并且切换到该分支
+	 - git branch -d [branch-name] 删除分支
+	 - git checkout [branch-name] 切换到指定分支 并且更新工作区
+	 - git checkout - 切换到上一个分支
+   - 删除远程分支
+	    - git push origin --delete [branch name]
+	    - git branch -dr [remote/branch]
+   - git merge [branch] 合并指定分支到当前分支
